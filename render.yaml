@@ -1,0 +1,44 @@
+services:
+  # Backend Service
+  - type: web
+    name: school-ceo-backend
+    runtime: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.x
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false # User must provide their MongoDB Atlas URI
+      - key: GROQ_API_KEY
+        sync: false # User must provide their Groq API Key
+      - key: JWT_SECRET
+        sync: false # User must provide a secure secret
+      - key: FRONTEND_URL
+        fromService:
+          name: school-ceo-frontend
+          type: web
+          property: url
+
+  # Frontend Service (Next.js)
+  - type: web
+    name: school-ceo-frontend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18.x
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          name: school-ceo-backend
+          type: web
+          property: url
+          suffix: /api
+      - key: NEXT_PUBLIC_SOCKET_URL
+        fromService:
+          name: school-ceo-backend
+          type: web
+          property: url
