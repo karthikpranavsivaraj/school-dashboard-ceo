@@ -1,5 +1,5 @@
 services:
-  # Backend Service
+  # Backend Service (Express)
   - type: web
     name: school-ceo-backend
     runtime: node
@@ -17,27 +17,4 @@ services:
       - key: JWT_SECRET
         sync: false # User must provide a secure secret
       - key: FRONTEND_URL
-        fromService:
-          name: school-ceo-frontend
-          type: web
-          property: host
-
-  # Frontend Service (Next.js)
-  - type: web
-    name: school-ceo-frontend
-    runtime: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_VERSION
-        value: 18.x
-      - key: NEXT_PUBLIC_API_URL
-        fromService:
-          name: school-ceo-backend
-          type: web
-          property: host
-      - key: NEXT_PUBLIC_SOCKET_URL
-        fromService:
-          name: school-ceo-backend
-          type: web
-          property: host
+        sync: false # User must provide their Vercel Deployment URL
