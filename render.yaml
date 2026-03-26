@@ -20,7 +20,7 @@ services:
         fromService:
           name: school-ceo-frontend
           type: web
-          property: url
+          property: host
 
   # Frontend Service (Next.js)
   - type: web
@@ -35,10 +35,9 @@ services:
         fromService:
           name: school-ceo-backend
           type: web
-          property: url
-          suffix: /api
+          property: host
       - key: NEXT_PUBLIC_SOCKET_URL
         fromService:
           name: school-ceo-backend
           type: web
-          property: url
+          property: host
