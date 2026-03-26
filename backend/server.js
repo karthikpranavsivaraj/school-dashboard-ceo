@@ -67,9 +67,9 @@ app.use('/api/grades', require('./routes/grades'));
 app.use('/api/excel', require('./routes/excelRoutes'));
 app.use('/api/ai', require('./routes/ai'));
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'School CEO Backend is running' });
+// Root route for Render health checks
+app.get('/', (req, res) => {
+  res.send('School CEO Backend API is live. Use /api/health for status.');
 });
 
 server.listen(PORT, () => {
